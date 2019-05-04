@@ -17,4 +17,9 @@
 
 #puzzleRow{
     padding: 20px;
+    font-size: 30px;
+}
+
+#wrong-guesses{
+    font-weight: bold;
 }

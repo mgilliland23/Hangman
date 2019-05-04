@@ -1,16 +1,21 @@
 var gameWords = ["frodo", "samwise", "gandalf", "bilbo", "gimli"];
 
-//
-var randomWord = function (wordsArray) {
-    //Generate a random number between 0 - 4
+var puzzleSection = document.getElementById("puzzle-state");
+var wrongGuesses = document.getElementById("wrong-guesses");
+var numGuesses = document.getElementById("guesses-left");
+var winCounter = document.getElementById("win-counter");
+var lossCounter = document.getElementById("loss-counter");
+var modalText = document.getElementById("modal-text");
+
+var myGame = setupGame(gameWords, 0, 0);
+puzzleSection.innerHTML = printArray(myGame.round.puzzleState);
+
+function randomWord(wordsArray){
     var randIndex = Math.floor(Math.random() * wordsArray.length);
-    //
     return wordsArray[randIndex];
-
-
 }
 
-var isCorrectGuess = function (word, letter) {
+function isCorrectGuess(word, letter) {
     if (word.includes(letter)) {
         return true;
     }
@@ -19,7 +24,7 @@ var isCorrectGuess = function (word, letter) {
     }
 }
 
-var getBlanks = function (word) {
+function getBlanks(word) {
     var blanksArray = [];
     for (var i = 0; i < word.length; i++) {
         blanksArray.push("_");
@@ -27,7 +32,7 @@ var getBlanks = function (word) {
     return blanksArray;
 }
 
-var fillBlanks = function (word, puzzleState, letter) {
+function fillBlanks(word, puzzleState, letter) {
     for (var i = 0; i < word.length; i++) {
         if (word.charAt(i) === letter) {
             puzzleState[i] = letter;
@@ -36,7 +41,7 @@ var fillBlanks = function (word, puzzleState, letter) {
     return puzzleState;
 }
 
-var setupRound = function (word) {
+function setupRound(word) {
     var newRound = {
         word: word,
         guessesLeft: 9,
@@ -46,17 +51,18 @@ var setupRound = function (word) {
     return newRound;
 }
 
-var updateRound = function (thisRound, letterGuessed) {
+function updateRound(thisRound, letterGuessed) {
     if (isCorrectGuess(thisRound.word, letterGuessed)) {
         thisRound.puzzleState = fillBlanks(thisRound.word, thisRound.puzzleState, letterGuessed);
     }
     else {
+        console.log("wrong guess");
         thisRound.wrongGuesses.push(letterGuessed);
         thisRound.guessesLeft--;
     }
 }
 
-var hasWon = function (puzzleState) {
+function hasWon(puzzleState) {
     for (var i = 0; i < puzzleState.length; i++) {
         if (puzzleState[i] === "_") {
             return false;
@@ -65,7 +71,7 @@ var hasWon = function (puzzleState) {
     return true;
 }
 
-var hasLost = function (guessesLeft) {
+function hasLost(guessesLeft) {
     if (guessesLeft === 0) {
         return true;
     }
@@ -74,7 +80,7 @@ var hasLost = function (guessesLeft) {
     }
 }
 
-var isEndOfRound = function (thisRound) {
+function isEndOfRound(thisRound) {
     if (hasLost(thisRound.guessesLeft)) {
         return true;
     }
@@ -86,32 +92,79 @@ var isEndOfRound = function (thisRound) {
     }
 }
 
-var setupGame = function (randomWords, numWins, numLosses) {
+function setupGame(randomWords, numWins, numLosses) {
     var game = {
         words: randomWords,
         wins: numWins,
         losses: numLosses,
         round: setupRound(randomWord(randomWords))
     }
-
     return game;
 }
 
-var startNewRound = function (game) {
+function startNewRound(game) {
+    
     if (hasLost(game.round.guessesLeft)) {
         game.losses++;
-        alert("You have lost. The word was : " + game.round.word);
+        modalText.innerHTML = "You have lost! The characters name was: " + game.round.word;
+        $("#alert-modal").modal("show");
+
     }
     else if (hasWon(game.round.puzzleState)) {
         game.wins++;
-        alert("You have won! The word was: " + game.round.word);
+        modalText.innerHTML = "You have won! The characters name was: " + game.round.word;
+        $("#alert-modal").modal("show");
     }
+
     game.round = setupRound(randomWord(game.words));
+    
 }
 
-var myGame = {
-    words: [],
-    wins: 0,
-    losses: 0,
-    round: null
+function printArray(array){
+    var arrayAsString = "";
+    for( var i = 0; i < array.length; i++){
+        if( i === (array.length - 1)){
+            arrayAsString += array[i];
+        }
+        else{
+            arrayAsString += array[i] + " ";
+        }
+        
+    }
+    return arrayAsString;
 }
+
+document.addEventListener( 'keydown', function(e){
+    console.log("letter played: " + e.key);
+
+    var letterPlayed = e.key;
+
+    updateRound(myGame.round, letterPlayed);
+    
+    if(isCorrectGuess(myGame.round.word, letterPlayed)){
+        puzzleSection.innerHTML = printArray(myGame.round.puzzleState);
+
+    }
+    else{
+        wrongGuesses.innerHTML = printArray(myGame.round.wrongGuesses);
+        numGuesses.innerHTML = myGame.round.guessesLeft;
+    }
+
+    if(isEndOfRound(myGame.round)){
+        startNewRound(myGame);
+
+        console.log(myGame.round);
+
+        //Update DOM
+        puzzleSection.innerHTML = printArray(myGame.round.puzzleState);
+        wrongGuesses.innerHTML = myGame.round.wrongGuesses;
+        numGuesses.innerHTML = myGame.round.guessesLeft;
+        winCounter.innerHTML = myGame.wins;
+        lossCounter.innerHTML = myGame.losses;
+ 
+    }   
+
+});
+
+
+
