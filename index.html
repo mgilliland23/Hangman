@@ -1,13 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="logic.js"></script> 
+    <script src="logic.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
+
 <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" id="instructionsBox">
+                <br>
+                <h2>Coding Bootcamp - Word Guess Game</h2>
+                <br>
+                <h4>Guess the name of the character from the Lord of the Rings</h4>
+                <br>
+                <h6>The game starts over when you win or lose</h6>
+                <p>Press a letter to begin playing </p>
+            </div>
+        </div>
+
+        <div class="row gameRow" id="topGameRow">
+            <div class="col-md-12">
+                <h3>Name of the character to guess</h3>
+            </div>
+        </div>
+
+        <div class="row gameRow" id="puzzleRow">
+                <div class="col-md-12">
+                    <p id="puzzle-state"></p>
+                </div>
+            </div>
     
+
+        <div class="row gameRow">
+            <div class="col-md-12">
+                <p id="wrong-guesses">Wrong Guesses: </p>
+            </div>
+        </div>
+
+        <div class="row gameRow">
+            <div class="col-md-12">
+                <p id="guesses-left">Wrong Guesses Left: </p>
+            </div>
+        </div>
+
+        <div class="row gameRow">
+            <div class="col-md-12" id="win-counter">
+                <p>Wins: </p>
+            </div>
+        </div>
+
+        <div class="row gameRow" id="loss-counter">
+            <div class="col-md-12">
+                <p >Losses: </p>
+            </div>
+        </div>
+
+    </div>
 </body>
+
 </html>

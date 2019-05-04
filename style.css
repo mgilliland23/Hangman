@@ -1,0 +1,20 @@
+#instructionsBox{
+    background-color: lightgray;
+}
+
+.gameRow{
+    border: solid lightgray 1px;
+    border-top: none;
+    padding: 6px;
+    font-size: 1em;
+}
+
+#topGameRow{
+    border-top: solid lightgray 1px;
+    margin-top: 40px;
+    padding: 6px;
+}
+
+#puzzleRow{
+    padding: 20px;
+}
