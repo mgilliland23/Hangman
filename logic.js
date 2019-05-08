@@ -6,6 +6,7 @@ var numGuesses = document.getElementById("guesses-left");
 var winCounter = document.getElementById("win-counter");
 var lossCounter = document.getElementById("loss-counter");
 var modalText = document.getElementById("modal-text");
+var modalTitle = document.getElementById("modal-title");
 
 var myGame = setupGame(gameWords, 0, 0);
 puzzleSection.innerHTML = printArray(myGame.round.puzzleState);
@@ -106,12 +107,14 @@ function startNewRound(game) {
     
     if (hasLost(game.round.guessesLeft)) {
         game.losses++;
+        modalTitle.innerHTML = "Loser!";
         modalText.innerHTML = "You have lost! The characters name was: " + game.round.word;
         $("#alert-modal").modal("show");
 
     }
     else if (hasWon(game.round.puzzleState)) {
         game.wins++;
+        modalTitle.innerHTML = "Winner!";
         modalText.innerHTML = "You have won! The characters name was: " + game.round.word;
         $("#alert-modal").modal("show");
     }

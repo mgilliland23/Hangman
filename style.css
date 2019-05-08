@@ -1,5 +1,6 @@
 #instructionsBox{
-    background-color: lightgray;
+    background-color: transparent;
+    color: white;
 }
 
 .gameRow{
@@ -7,6 +8,7 @@
     border-top: none;
     padding: 6px;
     font-size: 1em;
+    color: white;
 }
 
 #topGameRow{
@@ -23,3 +25,21 @@
 #wrong-guesses{
     font-weight: bold;
 }
+
+body, html {
+    height: 100%;
+    
+  }
+  
+  .bg { 
+    /* The image used */
+    background-image: url("background.jpg");
+  
+    /* Full height */
+    height: 100%; 
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
